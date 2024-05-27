@@ -1,1 +1,30 @@
- <h1>MemoTrips</h1>
+<!-- home.html или аналогичный шаблон -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои впечатления</title>
+</head>
+<body>
+    <h1>Мои впечатления о посещенных местах</h1>
+    {% if user.is_authenticated %}
+        <ul>
+            {% for note in notes %}
+                <li>
+                    <h2>{{ note.title }}</h2>
+                    <p>{{ note.comment }}</p>
+                    <p>{{ note.location }}</p>
+                    <a href="{% url 'edit_note' note.pk %}">Edit</a>
+                    <form action="{% url 'delete_note' note.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'add_note' %}">Добавить впечатление</a>
+    {% else %}
+        <p>Вам нужно войти в систему для входа в систему.</p>
+    {% endif %}
+</body>
+</html>

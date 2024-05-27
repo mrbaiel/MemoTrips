@@ -1,7 +1,8 @@
+import form
 from django import forms
-from .models import Memory
+from .models import Note
 
-class MemoryForm(form.ModelForm):
+class NoteForm(forms.ModelForm):
     class Meta:
-        model = Memory
+        model = Note
         fields = ["title", "description", 'location']

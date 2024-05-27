@@ -25,8 +25,10 @@ SECRET_KEY = "django-insecure-qofy6lsk)yh8#+sonz%&ez8cronjz@jf%73invcs7!7v--e83+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+AUTH_USER_MODEL = 'trips.User'
+# secret key = iri8deUq9U8XjENCWgKZ
+#id_vk = https://vk.com/app51931112
 
 # Application definition
 
@@ -39,6 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'trips',
     'allauth',
+
+    'sslserver',
+    'django_extensions',
     
 ]
 
@@ -57,7 +62,7 @@ ROOT_URLCONF = "memotrips.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -65,11 +70,14 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+
             ],
         },
     },
 ]
-
+# Перенаправления
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 WSGI_APPLICATION = "memotrips.wsgi.application"
 
 

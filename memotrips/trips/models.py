@@ -20,9 +20,9 @@ class User(AbstractUser):
         verbose_name='user permissions',
     )
 class Note(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="memories")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    comment = models.TextField()
     location = models.CharField(max_length=200)
     created_time = models.DateTimeField(auto_now_add=True)
 

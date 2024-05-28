@@ -8,19 +8,19 @@ from .forms import NoteForm
 
 def index(request):
     if request.user.is_authenticated:
-        memories = Note.objects.filter(user=request.user)
+        notes = Note.objects.filter(user=request.user)
         return render(request, 'index.html', {'notes': notes})
     return render(request, 'welcome.html')
 
 
 @login_required
-def add_memory(request):
+def add_note(request):
     if request.method == "POST":
         form = NoteForm(request.POST)
         if form.is_valid():
-            memory = form.save(commit=False)
-            memory.user = request.user
-            memory.save()
+            note = form.save(commit=False)
+            note.user = request.user
+            note.save()
             return redirect('index')
     else:
         form = NoteForm()
@@ -35,8 +35,8 @@ def edit_note(request, pk):
             form.save()
             return redirect("index")
     else:
-        NoteForm(instance=note)
-    return render(request, 'edit_note', {'form': form})
+        form = NoteForm(instance=note)
+    return render(request, 'edit_note.html', {'form': form})
 
 
 def delete_note(request, pk):

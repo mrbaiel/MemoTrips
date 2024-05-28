@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Цвет фона */
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    background-color: white; /* Цвет фона контейнера */
+    padding: 20px; /* Внутренний отступ контейнера */
+    border-radius: 10px; /* Скругление углов контейнера */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень контейнера */
+}
+
+.login-form {
+    width: 100%; /* Ширина формы */
+    max-width: 400px; /* Максимальная ширина формы */
+    margin: auto; /* Центрирование формы */
+}
+
+.login-button {
+    width: 100%; /* Ширина кнопки */
+    margin-top: 20px; /* Отступ от верхней части формы */
+}
+.login-button {
+    width: 100%; /* Ширина кнопки */
+    margin-top: 20px; /* Отступ от верхней части формы */
+    background-color: #007bff; /* Синий цвет кнопки */
+    border-color: #007bff; /* Цвет рамки кнопки */
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Измененный цвет кнопки при наведении */
+    border-color: #0056b3; /* Измененный цвет рамки кнопки при наведении */
+}
+
+.text{
+
+    marign-bottom:50px;
+}
+.login-form input[type="email"]
+.login-form input[type="password"] {
+    width: 100%;
+    height: 40px;
+}

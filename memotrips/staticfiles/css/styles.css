@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+}
+
+.login-form {
+    width: 50%; /* Ширина формы */
+    margin: auto; /* Центрирование формы */
+}
+
+.login-button {
+    width: 100%; /* Ширина кнопки */
+    margin-top: 20px; /* Отступ от верхней части формы */
+}

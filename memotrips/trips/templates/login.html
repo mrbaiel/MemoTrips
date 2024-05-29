@@ -20,6 +20,7 @@
     <h1>Вход</h1>
     <form method="post" action="{% url 'login' %}" class="mt-4">
         <p>Сервис позволяет вам хранить ваши впечатления о посещенных вами местах, отмечая их на карте и оставляя комментарии</p>
+        <p> Так как не удалось реализовать авторизацию вот пользователи:Valeria-veryinteresting, very-interesting, superuser:Eldiar-turdubekov</p>
         {% csrf_token %}
         {% if error %}
             <p class="text-danger">{{ error }}</p>

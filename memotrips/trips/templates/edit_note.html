@@ -1,22 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Редактировать запись</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Редактировать запись</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Сохранить</button>
-        </form>
-        <a href="{% url 'index' %}" class="btn btn-secondary mt-3">Назад</a>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Редактировать запись{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mt-5">Редактировать запись</h1>
+    <form action="{% url 'edit_note' pk=note.pk %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Название</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ note.title }}">
+        </div>
+        <div class="form-group">
+            <label for="comment">Комментарий</label>
+            <textarea class="form-control" id="comment" name="comment" rows="3">{{ note.comment }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="location">Местоположение</label>
+            <input type="hidden" id="location" name="location" value="{{ note.location }}">
+            <div id="map" style="height: 400px;"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+
+<!-- Leaflet JS и CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+    var map = L.map('map').setView([56.0153, 92.8932], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var marker;
+
+    map.on('click', function(e) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+        document.getElementById('location').value = e.latlng.lat + "," + e.latlng.lng;
+    });
+
+    // При загрузке страницы заполните поля данными из существующей записи
+    window.onload = function() {
+        var locationField = document.getElementById('location');
+        if (locationField.value) {
+            var coords = locationField.value.split(',');
+            marker = L.marker([coords[0], coords[1]]).addTo(map);
+            map.setView([coords[0], coords[1]], 10);
+        }
+    };
+</script>
+{% endblock content %}

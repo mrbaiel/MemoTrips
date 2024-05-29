@@ -1,12 +1,10 @@
-{% extends "header.html" %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}}Добавить впечатление {% endblock title %}
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+{% extends "base.html" %}
+
+{% block title %}Добавить воспоминание{% endblock title %}
 
 {% block content %}
-<div class="container">
-    <h1 class="mt-5">Добавить впечатление</h1>
+<div class="container mt-5">
+    <h1 class="mt-5">Добавить воспоминание</h1>
     <form action="{% url 'add_note' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
@@ -19,14 +17,33 @@
         </div>
         <div class="form-group">
             <label for="location">Местоположение</label>
-            <input type="text" class="form-control" id="location" name="location" required>
+            <input type="hidden" id="location" name="location">
+            <div id="map" style="height: 400px;"></div>
         </div>
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-{% endblock content %}
+<!-- Leaflet JS и CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+<script>
+
+    var map = L.map('map').setView([56.0153, 92.8932], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var marker;
+
+    map.on('click', function(e) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+        document.getElementById('location').value = e.latlng.lat + "," + e.latlng.lng;
+    });
+</script>
+{% endblock content %}

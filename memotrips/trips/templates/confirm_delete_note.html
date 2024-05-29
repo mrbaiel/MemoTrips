@@ -1,19 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Удаление записи</title>
 </head>
 <body>
-    <h2>Вы уверены, что хотите удалить эту запись?</h2>
-    <p>{{ memory }}</p>
-    <form method="post">
+    <h1>Удалить запись</h1>
+    <p>Вы точно хотите удалить запись "{{ note.title }}"?</p>
+    <form action="{% url 'delete_note' note.pk %}" method="post">
         {% csrf_token %}
-        <button type="submit">Удалить</button>
+        <button type="submit">Потвердите удаление</button>
     </form>
-
+    <a href="{% url 'index' %}">Отмена</a>
 </body>
 </html>

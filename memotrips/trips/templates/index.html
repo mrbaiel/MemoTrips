@@ -1,4 +1,4 @@
-{% extends "header.html" %}
+{% extends "base.html" %}
 
 {% block title %}
     MemoTrips
@@ -7,30 +7,33 @@
 {% block content %}
     <h1>Мои впечатления о посещенных местах</h1>
     {% if user.is_authenticated %}
-        <ul>
+        <ul class="list-group">
             {% for note in notes %}
-                <li>
+                <li class="list-group-item mb-3">
                     <h2>{{ note.title }}</h2>
                     <p>{{ note.comment }}</p>
                     <p>{{ note.location }}</p>
-                    <a href="{% url 'edit_note' note.pk %}" class="btn btn-primary">Изменить</a>
-                    <form action="{% url 'delete_note' note.pk %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Удалить</button>
-                    </form>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'edit_note' note.pk %}" class="btn btn-primary">Изменить</a>
+                        <form action="{% url 'delete_note' note.pk %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
+                    </div>
                 </li>
-               <a href="{% url 'add_note' %}" class="btn btn-success mt-3">Добавить впечатление</a>
-             {% empty %}
-            <div style="text-align: center">
-                <p> Добро пожаловать, {{ user.username }}</p>
-                <p> У вас нет ни одного воспоминания</p>
-                <a href="{% url 'add_note' %}" class="btn btn-success mt-3">Добавить впечатление</a>
-            </div>
-        {% endfor %}
+             <div class="text-center mt-4">
+        </div>
+            {% empty %}
+            <p>У вас нет ни одного воспоминания</p>
+             <div class="text-center mt-4">
+        </div>
+            {% endfor %}
+             <a href="{% url 'add_note' %}" class="btn btn-success">Добавить впечатление</a>
         </ul>
 
     {% else %}
-        <p>Вам нужно войти в систему для доступа к записям</p>
+        <div class="alert alert-warning text-center">
+            {% url 'welcome' %}
+        </div>
     {% endif %}
 {% endblock %}
-
